@@ -46,6 +46,17 @@ public class OrderSimpleApiController {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * fetch join을 사용하여 N+1 문제 해결
+     */
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3() {
+        return orderRepository.findAllWithMemberDelivery()
+                .stream()
+                .map(o -> new SimpleOrderDto(o))
+                .collect(Collectors.toList());
+    }
+
     @Data
     static class SimpleOrderDto {
         private Long orderId;
