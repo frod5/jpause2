@@ -5,10 +5,7 @@ import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.item.Item;
-import jpabook.jpashop.repositroy.ItemRepository;
-import jpabook.jpashop.repositroy.MemberRepository;
-import jpabook.jpashop.repositroy.OrderRepository;
-import jpabook.jpashop.repositroy.OrderSearch;
+import jpabook.jpashop.repositroy.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +18,7 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final ItemRepository itemRepository;
+    private final MemberRepositoryOld memberRepositoryOld;
     private final MemberRepository memberRepository;
 
     /**
@@ -29,7 +27,7 @@ public class OrderService {
     @Transactional
     public Long order(Long memberId, Long itemId, int count) {
         //엔티티 조회
-        Member member = memberRepository.findOne(memberId);
+        Member member = memberRepository.findById(memberId).get();
         Item item = itemRepository.findOne(itemId);
 
 
